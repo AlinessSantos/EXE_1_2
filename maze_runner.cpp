@@ -57,9 +57,15 @@ Position load_maze(const std::string& file_name) {
 // Função para imprimir o labirinto
 void print_maze() {
     // TODO: Implemente esta função
-    // 1. Percorra a matriz 'maze' usando um loop aninhado
-    // 2. Imprima cada caractere usando std::cout
-    // 3. Adicione uma quebra de linha (std::cout << '\n') ao final de cada linha do labirinto
+    // OK 1. Percorra a matriz 'maze' usando um loop aninhado
+    for(int i=0; i<num_rows; i++){
+        for(int j; j<num_cols; i++){
+            std::cout << maze[i][j];
+        }
+        std::cout << std::endl;
+    }
+    // OK 2. Imprima cada caractere usando std::cout
+    // OK 3. Adicione uma quebra de linha (std::cout << '\n') ao final de cada linha do labirinto
 }
 
 // Função para verificar se uma posição é válida
