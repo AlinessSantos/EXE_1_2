@@ -69,7 +69,6 @@ bool is_valid_position(int row, int col) {
     //    (row >= 0 && row < num_rows && col >= 0 && col < num_cols)
     // 2. Verifique se a posição é um caminho válido (maze[row][col] == 'x')
     // 3. Retorne true se ambas as condições forem verdadeiras, false caso contrário
-
     return false; // Placeholder - substitua pela lógica correta
 }
 
