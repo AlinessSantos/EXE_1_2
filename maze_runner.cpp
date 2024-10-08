@@ -26,7 +26,7 @@ Position load_maze(const std::string& file_name) {
     // OK 1. Abra o arquivo especificado por file_name usando std::ifstream
     std::ifstream arquivo(file_name);
     if(!arquivo){
-        std::cout << "Erro ao abrir arquivo!" << std::endl;
+        std::cerr << "Erro ao abrir arquivo!" << std::endl;
         std::exit;
     }
     // OK 2. Leia o número de linhas e colunas do labirinto
@@ -35,14 +35,14 @@ Position load_maze(const std::string& file_name) {
     // OK 3. Redimensione a matriz 'maze' de acordo (use maze.resize())
     // OK 4. Leia o conteúdo do labirinto do arquivo, caractere por caractere
     for(int i=0; i<num_rows; i++){
-        for(int j; j<num_cols; i++){
+        for(int j=0; j<num_cols; j++){
             arquivo >> maze[i][j];
         }
     }
     // OK 5. Encontre e retorne a posição inicial ('e')
     arquivo.close();
     for(int i=0; i<num_rows; i++){
-        for(int j; j<num_cols; i++){
+        for(int j=0; j<num_cols; j++){
             if(maze[i][j]== 'e'){
                 return {i, j};
             }
@@ -59,7 +59,7 @@ void print_maze() {
     // TODO: Implemente esta função
     // OK 1. Percorra a matriz 'maze' usando um loop aninhado
     for(int i=0; i<num_rows; i++){
-        for(int j; j<num_cols; i++){
+        for(int j=0; j<num_cols; j++){
             std::cout << maze[i][j];
         }
         std::cout << std::endl;
@@ -90,6 +90,10 @@ bool is_valid_position(int row, int col) {
 bool walk(Position pos) {
     // TODO: Implemente a lógica de navegação aqui
     // OK 1. Marque a posição atual como visitada (maze[pos.row][pos.col] = '.')
+    bool saida = false;
+    if(maze[pos.row][pos.col] == 's'){
+        saida = true;
+    }
     maze[pos.row][pos.col] = '.';
     // OK 2. Chame print_maze() para mostrar o estado atual do labirinto
     print_maze();
@@ -97,7 +101,7 @@ bool walk(Position pos) {
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
     // OK 4. Verifique se a posição atual é a saída (maze[pos.row][pos.col] == 's')
     //    Se for, retorne true
-    if(maze[pos.row][pos.col] == 's'){
+    if(saida){
         return true;
     }
     // OK 5. Verifique as posições adjacentes (cima, baixo, esquerda, direita)
@@ -130,13 +134,12 @@ int main(int argc, char* argv[]) {
         std::cerr << "Uso: " << argv[0] << " <arquivo_labirinto>" << std::endl;
         return 1;
     }
-
+    std::cout << argv[1] << std::endl;
     Position initial_pos = load_maze(argv[1]);
     if (initial_pos.row == -1 || initial_pos.col == -1) {
         std::cerr << "Posição inicial não encontrada no labirinto." << std::endl;
         return 1;
     }
-
     bool exit_found = walk(initial_pos);
 
     if (exit_found) {
@@ -144,6 +147,7 @@ int main(int argc, char* argv[]) {
     } else {
         std::cout << "Não foi possível encontrar a saída." << std::endl;
     }
+    
 
     return 0;
 }
