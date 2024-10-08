@@ -89,20 +89,38 @@ bool is_valid_position(int row, int col) {
 // Função principal para navegar pelo labirinto
 bool walk(Position pos) {
     // TODO: Implemente a lógica de navegação aqui
-    // 1. Marque a posição atual como visitada (maze[pos.row][pos.col] = '.')
-    // 2. Chame print_maze() para mostrar o estado atual do labirinto
-    // 3. Adicione um pequeno atraso para visualização:
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    // 4. Verifique se a posição atual é a saída (maze[pos.row][pos.col] == 's')
+    // OK 1. Marque a posição atual como visitada (maze[pos.row][pos.col] = '.')
+    maze[pos.row][pos.col] = '.';
+    // OK 2. Chame print_maze() para mostrar o estado atual do labirinto
+    print_maze();
+    // OK 3. Adicione um pequeno atraso para visualização:
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    // OK 4. Verifique se a posição atual é a saída (maze[pos.row][pos.col] == 's')
     //    Se for, retorne true
-    // 5. Verifique as posições adjacentes (cima, baixo, esquerda, direita)
+    if(maze[pos.row][pos.col] == 's'){
+        return true;
+    }
+    // OK 5. Verifique as posições adjacentes (cima, baixo, esquerda, direita)
     //    Para cada posição adjacente:
     //    a. Se for uma posição válida (use is_valid_position()), adicione-a à pilha valid_positions
-    // 6. Enquanto houver posições válidas na pilha (!valid_positions.empty()):
+    std::vector<Position> passo = {{-1,0}, {0,1}, {1,0}, {0,-1}};
+    for(auto i:passo){
+        if(is_valid_position(pos.row+i.row, pos.col+i.col)){
+            valid_positions.push({pos.row+i.row, pos.col+i.col});
+        }
+    };
+    // OK 6. Enquanto houver posições válidas na pilha (!valid_positions.empty()):
     //    a. Remova a próxima posição da pilha (valid_positions.top() e valid_positions.pop())
     //    b. Chame walk recursivamente para esta posição
     //    c. Se walk retornar true, propague o retorno (retorne true)
-    // 7. Se todas as posições foram exploradas sem encontrar a saída, retorne false
+    while(!valid_positions.empty()){
+        Position proxima = valid_positions.top();
+        valid_positions.pop();
+        if(walk(proxima)){
+            return true;
+        }
+    }
+    // OK 7. Se todas as posições foram exploradas sem encontrar a saída, retorne false
     
     return false; // Placeholder - substitua pela lógica correta
 }
