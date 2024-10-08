@@ -71,10 +71,18 @@ void print_maze() {
 // Função para verificar se uma posição é válida
 bool is_valid_position(int row, int col) {
     // TODO: Implemente esta função
-    // 1. Verifique se a posição está dentro dos limites do labirinto
-    //    (row >= 0 && row < num_rows && col >= 0 && col < num_cols)
-    // 2. Verifique se a posição é um caminho válido (maze[row][col] == 'x')
-    // 3. Retorne true se ambas as condições forem verdadeiras, false caso contrário
+    bool posicao_valida = false;
+    // OK 1. Verifique se a posição está dentro dos limites do labirinto
+    if((row >= 0) && (row < num_rows) && (col >= 0) && (col < num_cols)){
+        posicao_valida = true;
+    } else {
+        return posicao_valida;
+    }
+    if(maze[row][col] == 'x' || maze[row][col] == 's' || maze[row][col] == 'e'){
+        return posicao_valida;
+    }
+    // OK 2. Verifique se a posição é um caminho válido (maze[row][col] == 'x')
+    // OK 3. Retorne true se ambas as condições forem verdadeiras, false caso contrário
     return false; // Placeholder - substitua pela lógica correta
 }
 
